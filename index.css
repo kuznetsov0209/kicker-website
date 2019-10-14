@@ -1,0 +1,50 @@
+html,
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Gotham", serif;
+  background-color: #191919;
+  height: 100%;
+  margin: 0;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 3px;
+  height: 73px;
+  border-radius: 4px;
+  background-color: #ff234a;
+}
+
+@font-face {
+  font-family: "Gotham";
+  font-weight: 900;
+  src: url("src/assets/fonts/GothamPro-Black.woff2") format("woff2"),
+    url("src/assets/fonts/GothamPro-Black.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Gotham";
+  font-weight: 500;
+  src: url("src/assets/fonts/GothamPro-Medium.woff2") format("woff2"),
+    url("src/assets/fonts/GothamPro-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Gotham";
+  font-weight: bold;
+  src: url("src/assets/fonts/GothamPro-Bold.woff2") format("woff2"),
+    url("src/assets/fonts/GothamPro-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Gotham-Ultra";
+  src: url("src/assets/fonts/GothamPro-Ultra.woff") format("woff");
+}
