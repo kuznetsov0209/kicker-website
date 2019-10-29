@@ -3,7 +3,12 @@ import PopupScreen from "/src/components/PopupScreen";
 // import SearchIcon from "/src/components/Icons/SearchIcon";
 import { withAppContext } from "/src/context/app";
 
-import { Content, UsersList, User, UserPhoto } from "./ChoosePartnerPopup.styles";
+import {
+  Content,
+  UsersList,
+  User,
+  UserPhoto
+} from "./ChoosePartnerPopup.styles";
 
 export default withAppContext(
   class ChoosePartner extends React.Component {
