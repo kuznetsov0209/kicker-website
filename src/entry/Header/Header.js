@@ -23,7 +23,7 @@ class Header extends React.Component {
     switch (to) {
       case "/games":
         return <StyledGamesIcon isActive={isActive} />;
-      case "/leaders":
+      case "/players":
         return <StyledLeadersIcon isActive={isActive} />;
       case "/tournaments":
         return <StyledTournamentsIcon isActive={isActive} />;
@@ -56,9 +56,9 @@ class Header extends React.Component {
         </MainLink>
 
         <RoutingList>
-          {/* {this.menuLink({ label: "GAMES", to: "/games" })}
-          {this.menuLink({ label: "LEADERS", to: "/leaders" })} */}
-          {/* {this.menuLink({ label: "TOURNAMENTS", to: "/tournaments" })} */}
+          {this.menuLink({ label: "GAMES", to: "/games" })}
+          {this.menuLink({ label: "PLAYERS", to: "/players" })}
+          {this.menuLink({ label: "TOURNAMENTS", to: "/tournaments" })}
         </RoutingList>
 
         <UserInfo>
