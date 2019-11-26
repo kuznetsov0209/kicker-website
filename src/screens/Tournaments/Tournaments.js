@@ -37,7 +37,7 @@ import {
 
 class Tournaments extends React.Component {
   componentDidMount() {
-    this.props.loadTournamentData();
+    this.props.loadTournamentData(2);
   }
 
   get isTournamentStarted() {
