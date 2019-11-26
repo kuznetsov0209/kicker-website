@@ -4,6 +4,7 @@ import { withAppContext } from "/src/context/app";
 
 import Table from "/src/components/Table";
 import PlayerPhoto from "/src/components/PlayerPhoto";
+import RoundPhoto from "/src/components/RoundPhoto";
 
 export default withAppContext(
   class PlayersStats extends React.Component {
@@ -24,11 +25,7 @@ export default withAppContext(
           style: { width: 50 },
           render(value, index) {
             return (
-              <PlayerPhoto
-                position={index + 1}
-                player={{ photoUrl: value.photoUrl }}
-                style={{ marginLeft: 10 }}
-              />
+              <RoundPhoto src={value.photoUrl} style={{ marginLeft: 10 }} />
             );
           }
         },
