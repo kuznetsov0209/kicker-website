@@ -8,6 +8,10 @@ export const fetchUsers = () => {
   return request("/api/users").then(data => data.users);
 };
 
+export const fetchUsersStats = () => {
+  return request("/api/stats").then(data => data.usersStats.all);
+};
+
 export const fetchTournament = (id = "last") => {
   return request(`/api/tournaments/${id}`).then(data => data.tournament);
 };
