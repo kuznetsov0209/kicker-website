@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 
 const Label = styled.div`
-  font-size: 22px;
+  font-size: 62px;
+  line-height: 74px;
   color: #ed4159;
-  margin-top: 60px;
-  margin-bottom: 24px;
+  margin-top: 120px;
+  margin-bottom: 25px;
   font-weight: 900;
 `;
 
