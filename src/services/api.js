@@ -12,6 +12,10 @@ export const fetchTournament = (id = "last") => {
   return request(`/api/tournaments/${id}`).then(data => data.tournament);
 };
 
+export const fetchTournaments = () => {
+  return request("/api/tournaments").then(data => data.tournaments);
+};
+
 export const fetchTournamentGames = ({ tournamentId }) => {
   return request(`/api/tournaments/${tournamentId}/games-results`).then(
     data => data.gamesResults
