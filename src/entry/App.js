@@ -75,6 +75,11 @@ class App extends Component {
         tournamentsHistory[i].stats = stats;
       }
       this.setState({ futureTournaments, tournamentsHistory });
+
+      try {
+        const user = await api.fetchUser();
+        this.setState({ user });
+      } catch {}
     }
   };
 
