@@ -1,5 +1,5 @@
 // const API_HOST = "https://kicker.mercdev.com";
-const API_HOST = "http://localhost:3000";
+const API_HOST = process.env.API_HOST;
 
 /* global fetch */
 
