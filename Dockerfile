@@ -4,6 +4,7 @@ ENV CI true
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 COPY . .
+ARG NODE_ENV=production
 RUN yarn build
 
 FROM nginx:1.15.6-alpine as runner
