@@ -1,0 +1,11 @@
+{
+  "name": "kicker-frontend-staging",
+  "restart": "on-failure:2",
+  "domain": "staging.kicker.mercury.office",
+  "port": "80",
+  "project": "kicker-frontend",
+  "compress": false,
+  "letsencrypt": false,
+  "template": "image",
+  "image": "kickermercdev/kicker-frontend:staging-latest"
+}

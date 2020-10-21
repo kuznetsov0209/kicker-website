@@ -1,0 +1,11 @@
+{
+  "name": "kicker-frontend-production",
+  "restart": "always",
+  "domain": "kicker.mercury.office",
+  "port": "80",
+  "project": "kicker-frontend-production",
+  "compress": true,
+  "letsencrypt": false,
+  "template": "image",
+  "image": "kickermercdev/kicker-frontend:latest"
+}
