@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
 import Tournaments from "/src/screens/Tournaments";
+import Players from "/src/screens/Players";
 import AppContext from "/src/context/app";
 import * as api from "/src/services/api";
 
@@ -87,6 +88,7 @@ class App extends Component {
                   path="/tournaments/:tournamentId"
                   component={Tournaments}
                 />
+                <Route exact path="/players" component={Players} />
               </Switch>
             </Main>
           </>
