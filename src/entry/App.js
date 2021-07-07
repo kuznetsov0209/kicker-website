@@ -43,6 +43,46 @@ class App extends Component {
     } catch {}
   };
 
+  loadTournamentsData = async () => {
+    const tournaments = await api.fetchTournaments();
+    if (tournaments) {
+      const date = new Date();
+
+      const futureTournaments = tournaments.filter(tournament => {
+        return (
+          Date.parse(tournament.startDate) >= Date.parse(date) && tournament
+        );
+      });
+      futureTournaments.sort((a, b) => {
+        return Date.parse(a.startDate) - Date.parse(b.startDate);
+      });
+
+      const tournamentsHistory = tournaments.filter(tournament => {
+        return (
+          Date.parse(tournament.startDate) < Date.parse(date) && tournament
+        );
+      });
+      tournamentsHistory.sort((a, b) => {
+        return Date.parse(a.startDate) + Date.parse(b.startDate);
+      });
+      for (let i = 0; i < tournamentsHistory.length; i++) {
+        const { stats, usersStats } = await api.fetchTournamentStats({
+          tournamentId: tournamentsHistory[i].id
+        });
+        if (stats) {
+          stats.sort((a, b) => b.wins - a.wins || b.goals - a.goals);
+        }
+        tournamentsHistory[i].stats = stats;
+      }
+      this.setState({ futureTournaments, tournamentsHistory });
+
+      try {
+        const user = await api.fetchUser();
+        this.setState({ user });
+      } catch {}
+    }
+  };
+
   unregisterTeam = async () => {
     const { tournament, team } = this.state;
 
@@ -73,7 +113,8 @@ class App extends Component {
           ...this.state,
           registerTeam: this.registerTeam,
           unregisterTeam: this.unregisterTeam,
-          loadTournamentData: this.loadTournamentData
+          loadTournamentData: this.loadTournamentData,
+          loadTournamentsData: this.loadTournamentsData
         }}
       >
         <Router>
@@ -82,11 +123,7 @@ class App extends Component {
             <Main>
               <Switch>
                 <Route exact path="/" component={Tournaments} />
-                <Route
-                  exact
-                  path="/tournaments/:tournamentId"
-                  component={Tournaments}
-                />
+                <Route exact path="/tournaments/" component={Tournaments} />
               </Switch>
             </Main>
           </>

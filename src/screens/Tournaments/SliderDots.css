@@ -1,0 +1,68 @@
+.slider-dots {
+  top: -107px;
+  position: absolute;
+  display: block;
+  width: 100%;
+  padding: 46px 0px 26px 0px;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.slider-dots li {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 15px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.slider-dots li button {
+  font-size: 0;
+  line-height: 0;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  cursor: pointer;
+  color: transparent;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
+.slider-dots li button:hover,
+.slider-dots li button:focus {
+  outline: none;
+}
+
+.slider-dots li button:hover:before,
+.slider-dots li button:focus:before {
+  opacity: 0.5;
+}
+
+.slider-dots li button:before {
+  font-family: "slick";
+  font-size: 13px;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  content: "•";
+  text-align: center;
+  opacity: 0.3;
+  color: #262525;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-stroke: 2px #ffffff;
+}
+
+.slider-dots li.slick-active button:before {
+  opacity: 0.75;
+  color: #f70b5d;
+  -webkit-text-stroke: 1px #f70b5d;
+}

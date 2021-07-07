@@ -1,5 +1,8 @@
 import React from "react";
 import format from "date-fns/format";
+import ru from "date-fns/locale/ru";
+import differenceInDays from "date-fns/difference_in_days";
+import Slider from "react-slick";
 
 import screenshot from "/src/assets/images/screenshot-2019-01-09-at-15-25-05.png";
 import screenshot2x from "/src/assets/images/screenshot-2019-01-09-at-15-25-05@2x.png";
@@ -12,17 +15,20 @@ import Button from "/src/components/Button";
 import Label from "/src/components/Label";
 import { GOOGLE_AUTH_URL } from "/src/services/backend";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./SliderDots.css";
+
+import TimerIcon from "../../components/Icons/TimerIcon";
+import CupFirstPlaceIcon from "../../components/Icons/CupFirstPlaceIcon";
 import RegisterTeam from "./RegisterTeam";
 import RegisteredTeam from "./RegisteredTeam";
 import TournamentStats from "./TournamentStats";
 import TournamentUserStats from "./TournamentUserStats";
 import TournamentGames from "./TournamentGames";
 import TournamentRegisteredTeams from "./TournamentRegisteredTeams";
+import TeamPhoto from "../../components/TeamPhoto";
 import {
-  Main,
-  Title,
-  SubTitle,
-  Text,
   RegistrationCase,
   Link,
   StepNumber,
@@ -32,18 +38,43 @@ import {
   LeaderboardImage,
   Paragraph,
   RulesImage,
-  StepText
+  StepText,
+  FutureTournaments,
+  FutureTournamentsButton,
+  GrayText,
+  FutureTournamentsMessageContainer,
+  FutureTournamentsTimerContainer,
+  TournamentsHistory,
+  TournamentHistoryItem,
+  TournamentHistoryItemSubtitle,
+  TournamentHistoryItemTitle,
+  WinnerItem,
+  FutureTournamentsSubTitle,
+  FutureTournamentsTitle,
+  FutureTournamentsText,
+  TeamName,
+  TeamPlayers,
+  TeamInfo,
+  CupContainer,
+  Team,
+  TournamentHistoryTitle
 } from "./Tournaments.styles";
 
 class Tournaments extends React.Component {
   componentDidMount() {
-    this.props.loadTournamentData();
+    this.props.loadTournamentsData();
   }
+
+  openTournamentRegulations = () => {
+    window.open(
+      "https://docs.google.com/document/d/1Cegjf6UinYJsmF7213crxUTqTzSm03GlecMoXsgsgLE/edit?usp=sharing",
+      "_blank"
+    );
+  };
 
   get isTournamentStarted() {
     return (this.props.tournamentGames || []).length > 0;
   }
-
   renderRegistrationState() {
     const { user, team } = this.props;
     return (
@@ -111,23 +142,128 @@ class Tournaments extends React.Component {
   }
 
   render() {
-    const { tournament, tournamentStats } = this.props;
+    const { futureTournaments, tournamentsHistory } = this.props;
 
-    if (!tournament) {
+    const sliderSettings = {
+      arrows: false,
+      dots: true,
+      dotsClass: "slider-dots",
+      initialSlide: 0,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      slickGoTo: 1
+    };
+
+    if (!futureTournaments && !tournamentsHistory) {
       return null;
     }
 
     return (
       <>
-        <Main>
-          <SubTitle>
-            {format(tournament.startDate, "DD MMM")}
-            {" — "}
-            {format(tournament.endDate, "DD MMM YYYY")}
-          </SubTitle>
-          <Title>{tournament.title}</Title>
-        </Main>
-        {this.isTournamentStarted
+        {futureTournaments && (
+          <FutureTournaments>
+            <Slider {...sliderSettings}>
+              {futureTournaments.map(tournament => {
+                return (
+                  <div key={tournament.id}>
+                    <FutureTournamentsSubTitle>
+                      {format(tournament.startDate, "DD MMMM", {
+                        locale: ru
+                      })}
+                      {" — "}
+                      {format(tournament.endDate, "DD MMMM YYYY", {
+                        locale: ru
+                      })}
+                    </FutureTournamentsSubTitle>
+                    <FutureTournamentsTitle>
+                      {tournament.title}
+                    </FutureTournamentsTitle>
+                    <FutureTournamentsButton
+                      color="primary"
+                      variant="contained"
+                      size="large"
+                    >
+                      Регистрация
+                    </FutureTournamentsButton>
+                    <FutureTournamentsButton
+                      color="primary"
+                      variant="outlined"
+                      size="large"
+                      onClick={this.openTournamentRegulations}
+                    >
+                      Регламент турнира
+                    </FutureTournamentsButton>
+                    <FutureTournamentsMessageContainer>
+                      <GrayText>До окончания регистрации</GrayText>
+                      <FutureTournamentsTimerContainer>
+                        <TimerIcon />
+                        <FutureTournamentsText>
+                          {differenceInDays(tournament.startDate, new Date())}{" "}
+                          дней
+                        </FutureTournamentsText>
+                      </FutureTournamentsTimerContainer>
+                    </FutureTournamentsMessageContainer>
+                  </div>
+                );
+              })}
+            </Slider>
+          </FutureTournaments>
+        )}
+        {tournamentsHistory && (
+          <TournamentsHistory>
+            <TournamentHistoryTitle>История турниров</TournamentHistoryTitle>
+            {tournamentsHistory.map(tournament => {
+              return tournament.stats.length > 0 ? (
+                <TournamentHistoryItem key={tournament.id}>
+                  <TournamentHistoryItemSubtitle>
+                    {format(tournament.startDate, "DD MMMM", {
+                      locale: ru
+                    })}
+                    {" — "}
+                    {format(tournament.endDate, "DD MMMM YYYY", {
+                      locale: ru
+                    })}
+                  </TournamentHistoryItemSubtitle>
+                  <TournamentHistoryItemTitle>
+                    {tournament.title}
+                  </TournamentHistoryItemTitle>
+                  <WinnerItem>
+                    <Team>
+                      <TeamPhoto
+                        team={tournament.stats[0].team}
+                        style={{ margin: 16 }}
+                      />
+                      <TeamInfo>
+                        <TeamName>{tournament.stats[0].team.name}</TeamName>
+                        <TeamPlayers>
+                          {[
+                            tournament.stats[0].team.player1.name,
+                            tournament.stats[0].team.player2.name
+                          ].join(", ")}
+                        </TeamPlayers>
+                      </TeamInfo>
+                    </Team>
+                    <CupContainer>
+                      <CupFirstPlaceIcon />
+                    </CupContainer>
+                  </WinnerItem>
+                </TournamentHistoryItem>
+              ) : null;
+            })}
+          </TournamentsHistory>
+        )}
+      </>
+    );
+  }
+}
+
+export default withAppContext(Tournaments);
+
+/* 
+
+{this.isTournamentStarted
           ? this.renderTournamentStats()
           : this.renderRegistrationState()}
 
@@ -219,9 +355,5 @@ class Tournaments extends React.Component {
         {this.isTournamentStarted
           ? undefined
           : this.renderRegistrationStateFooter()}
-      </>
-    );
-  }
-}
 
-export default withAppContext(Tournaments);
+          */
