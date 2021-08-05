@@ -1,7 +1,7 @@
 {
   "name": "kicker-frontend-production",
   "restart": "always",
-  "domain": "kicker.mercury.office",
+  "domain": "kicker.mercdev.com",
   "port": "80",
   "project": "kicker-frontend-production",
   "compress": true,
