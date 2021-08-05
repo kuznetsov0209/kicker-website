@@ -17,26 +17,26 @@ jobs:
 
       - name: Define var
         run: |
-          echo "::set-env name=IMAGE_NAME::${DOCKER_LOGIN}/kicker-frontend"
-          echo "::set-env name=PACKAGE_VERSION::$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)"
+          echo "IMAGE_NAME=${DOCKER_LOGIN}/kicker-frontend" >> $GITHUB_ENV
+          echo "PACKAGE_VERSION=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)" >> $GITHUB_ENV
 
       - name: Build the Docker container image
         run: |
-          echo $IMAGE_NAME
-          echo $PACKAGE_VERSION
+          echo ${{ env.IMAGE_NAME }}
+          echo ${{ env.PACKAGE_VERSION }}
           docker build \
            --cache-from ${IMAGE_NAME}:latest \
            --build-arg NODE_ENV=production \
-           -t ${IMAGE_NAME}:$PACKAGE_VERSION \
-           -t ${IMAGE_NAME}:latest \
+           -t ${{ env.IMAGE_NAME }}:${{ env.PACKAGE_VERSION }} \
+           -t ${{ env.IMAGE_NAME }}:latest \
            .
 
       - name: Push the Docker container image
         run: |
-          echo $PACKAGE_VERSION
+          echo ${{ env.PACKAGE_VERSION }}
 
           docker login --username ${DOCKER_LOGIN} -p ${{ secrets.DOCKER_HUB_TOKEN }}
-          docker push ${IMAGE_NAME}:$PACKAGE_VERSION
+          docker push ${IMAGE_NAME}:${{ env.PACKAGE_VERSION }}
           docker push ${IMAGE_NAME}:latest
 
   deploy:
